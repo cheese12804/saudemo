@@ -1,0 +1,14 @@
+# Python bytecode
+*.pyc
+__pycache__/
+
+# Thư mục ảo môi trường
+.venv/
+venv/
+
+# Các file cấu hình của IDE
+.idea/
+.vscode/
+
+# Các file khác mà bạn không muốn đưa lên GitHub
+.DS_Store

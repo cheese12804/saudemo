@@ -1,0 +1,63 @@
+[32mINFO    [0m root:conftest.py:29 === BẮT ĐẦU TEST SESSION ===
+[32mINFO    [0m root:conftest.py:36 Setting up test - Initializing driver
+[32mINFO    [0m root:driver_manage.py:16 Initializing chrome driver
+[32mINFO    [0m root:driver_manage.py:30 Maximizing browser window and setting implicit wait
+[32mINFO    [0m root:driver_manage.py:33 Driver initialized successfully: chrome
+[32mINFO    [0m root:conftest.py:38 Test setup completed
+[32mINFO    [0m root:driver_manage.py:39 Opening URL: https://www.saucedemo.com/
+[32mINFO    [0m root:driver_manage.py:42 URL opened successfully
+[32mINFO    [0m root:login_page.py:14 LoginPage: Entering username: standard_user
+[32mINFO    [0m root:base_page.py:62 Waiting for element visible: ('xpath', "//input[@placeholder='Username']")
+[32mINFO    [0m root:base_page.py:32 Entering text into ('xpath', "//input[@placeholder='Username']"): standard_user
+[32mINFO    [0m root:login_page.py:21 LoginPage: Entering password: secret_sauce
+[32mINFO    [0m root:base_page.py:62 Waiting for element visible: ('xpath', "//input[@placeholder='Password']")
+[32mINFO    [0m root:base_page.py:32 Entering text into ('xpath', "//input[@placeholder='Password']"): secret_sauce
+[32mINFO    [0m root:login_page.py:27 LoginPage: Clicking login button
+[32mINFO    [0m root:base_page.py:58 Waiting for element clickable: ('xpath', "//input[@type='submit']")
+[32mINFO    [0m root:base_page.py:27 Clicking element: ('xpath', "//input[@type='submit']")
+[32mINFO    [0m root:home_page.py:13 ListProductPage: Sorting products by Name (Z to A)
+[32mINFO    [0m root:base_page.py:58 Waiting for element clickable: ('xpath', "//select[@data-test='product-sort-container']")
+[32mINFO    [0m root:base_page.py:27 Clicking element: ('xpath', "//select[@data-test='product-sort-container']")
+[32mINFO    [0m root:base_page.py:58 Waiting for element clickable: ('xpath', "//*[text()= 'Name (Z to A)']")
+[32mINFO    [0m root:base_page.py:27 Clicking element: ('xpath', "//*[text()= 'Name (Z to A)']")
+[32mINFO    [0m root:home_page.py:42 Captured product names: ['Test.allTheThings() T-Shirt (Red)', 'Sauce Labs Onesie', 'Sauce Labs Fleece Jacket', 'Sauce Labs Bolt T-Shirt', 'Sauce Labs Bike Light', 'Sauce Labs Backpack']
+[32mINFO    [0m root:home_page.py:44 Expected sorted names (Name (Z to A)): ['Test.allTheThings() T-Shirt (Red)', 'Sauce Labs Onesie', 'Sauce Labs Fleece Jacket', 'Sauce Labs Bolt T-Shirt', 'Sauce Labs Bike Light', 'Sauce Labs Backpack']
+[32mINFO    [0m root:home_page.py:13 ListProductPage: Sorting products by Price (low to high)
+[32mINFO    [0m root:base_page.py:58 Waiting for element clickable: ('xpath', "//select[@data-test='product-sort-container']")
+[32mINFO    [0m root:base_page.py:27 Clicking element: ('xpath', "//select[@data-test='product-sort-container']")
+[32mINFO    [0m root:base_page.py:58 Waiting for element clickable: ('xpath', "//*[text()= 'Price (low to high)']")
+[32mINFO    [0m root:base_page.py:27 Clicking element: ('xpath', "//*[text()= 'Price (low to high)']")
+[32mINFO    [0m root:home_page.py:48 Captured product prices: [7.99, 9.99, 15.99, 15.99, 29.99, 49.99]
+[32mINFO    [0m root:home_page.py:50 Expected sorted prices (Price (low to high)): [7.99, 9.99, 15.99, 15.99, 29.99, 49.99]
+[32mINFO    [0m root:home_page.py:21 ListProductPage: Adding product to cart Sauce Labs Backpack
+[32mINFO    [0m root:base_page.py:58 Waiting for element clickable: ('xpath', "//div[text()='Sauce Labs Backpack']/parent::a/parent::div/following-sibling::div//button")
+[32mINFO    [0m root:base_page.py:27 Clicking element: ('xpath', "//div[text()='Sauce Labs Backpack']/parent::a/parent::div/following-sibling::div//button")
+[32mINFO    [0m root:home_page.py:21 ListProductPage: Adding product to cart Sauce Labs Bike Light
+[32mINFO    [0m root:base_page.py:58 Waiting for element clickable: ('xpath', "//div[text()='Sauce Labs Bike Light']/parent::a/parent::div/following-sibling::div//button")
+[32mINFO    [0m root:base_page.py:27 Clicking element: ('xpath', "//div[text()='Sauce Labs Bike Light']/parent::a/parent::div/following-sibling::div//button")
+[32mINFO    [0m root:home_page.py:27 ListProductPage: Opening cart page
+[32mINFO    [0m root:base_page.py:58 Waiting for element clickable: ('xpath', "//a[@data-test='shopping-cart-link']")
+[32mINFO    [0m root:base_page.py:27 Clicking element: ('xpath', "//a[@data-test='shopping-cart-link']")
+[32mINFO    [0m root:cart_page.py:25 CartPage: Actual items: ['Sauce Labs Backpack', 'Sauce Labs Bike Light']
+[32mINFO    [0m root:cart_page.py:26 CartPage: Expected items: ['Sauce Labs Backpack', 'Sauce Labs Bike Light']
+[32mINFO    [0m root:cart_page.py:12 CartPage: Clicking checkout button
+[32mINFO    [0m root:base_page.py:58 Waiting for element clickable: ('xpath', "//button[text()='Checkout']")
+[32mINFO    [0m root:base_page.py:27 Clicking element: ('xpath', "//button[text()='Checkout']")
+[32mINFO    [0m root:checkout_page.py:13 CheckoutPage: Filling checkout form: Joseph, Hall, 23177
+[32mINFO    [0m root:base_page.py:62 Waiting for element visible: ('xpath', "//*[@placeholder='First Name']")
+[32mINFO    [0m root:base_page.py:32 Entering text into ('xpath', "//*[@placeholder='First Name']"): Joseph
+[32mINFO    [0m root:base_page.py:32 Entering text into ('xpath', "//*[@placeholder='Last Name']"): Hall
+[32mINFO    [0m root:base_page.py:32 Entering text into ('xpath', "//*[@placeholder='Zip/Postal Code']"): 23177
+[32mINFO    [0m root:checkout_page.py:21 CheckoutPage: Clicking continue button
+[32mINFO    [0m root:base_page.py:58 Waiting for element clickable: ('id', 'continue')
+[32mINFO    [0m root:base_page.py:27 Clicking element: ('id', 'continue')
+[32mINFO    [0m root:checkout_page.py:27 CheckoutPage: Clicking finish button
+[32mINFO    [0m root:base_page.py:58 Waiting for element clickable: ('id', 'finish')
+[32mINFO    [0m root:base_page.py:27 Clicking element: ('id', 'finish')
+[32mINFO    [0m root:checkout_page.py:34 CheckoutPage: Verifying order completion
+[32mINFO    [0m root:base_page.py:62 Waiting for element visible: ('xpath', "//*[text()= 'Thank you for your order!']")
+[32mINFO    [0m root:conftest.py:40 Tearing down test - Closing driver
+[32mINFO    [0m root:driver_manage.py:48 Quitting driver
+[32mINFO    [0m root:driver_manage.py:51 Driver quit successfully
+[32mINFO    [0m root:conftest.py:42 Test teardown completed
+[32mINFO    [0m root:conftest.py:31 === KẾT THÚC TEST SESSION ===
