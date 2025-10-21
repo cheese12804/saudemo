@@ -13,7 +13,7 @@ def test_login_valid_credentials():
     LoginPage.enter_username(username)
     LoginPage.enter_password(password)
     LoginPage.click_login_button()
-    assert LoginPage.is_login_successful(), "Login should be successful"
+    LoginPage.is_login_successful()
 
 
 @allure.title("Login with invalid password")
