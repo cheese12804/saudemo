@@ -38,7 +38,7 @@ class LoginPage(BasePage):
     @staticmethod
     @allure.step("Checking if login is successful")
     def is_login_successful():
-        LoginPage.is_element_display(CommonLocator.element_by_text("Open Menu"))
+        LoginPage.wait_for_element_visible(CommonLocator.element_by_id("shopping_cart_container"))
 
     @staticmethod
     @allure.step("Checking if login is unsuccessful")
