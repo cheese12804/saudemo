@@ -51,10 +51,11 @@ def setup_teardown2():
         os.makedirs(allure_results_dir)
     os_name = platform.system()
     os_version = platform.release()
+    browser_name = os.getenv('BROWSER', 'chrome')
     env_file = os.path.join(allure_results_dir, "environment.properties")
     with open(env_file, 'w', encoding='utf-8') as f:
         f.write(f"os={os_name} {os_version}\n")
-        f.write(f"browser={Config.BROWSER}\n")
+        f.write(f"browser={browser_name}\n")
         f.write(f"python_version={os.sys.version.split()[0]}\n")
         f.write(f"test_environment=Testing\n")
 
