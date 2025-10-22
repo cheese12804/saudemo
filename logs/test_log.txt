@@ -43,11 +43,11 @@ INFO     root:cart_page.py:26 CartPage: Expected items: ['Sauce Labs Backpack', 
 INFO     root:cart_page.py:12 CartPage: Clicking checkout button
 INFO     root:base_page.py:59 Waiting for element clickable: ('xpath', "//button[text()='Checkout']")
 INFO     root:base_page.py:28 Clicking element: ('xpath', "//button[text()='Checkout']")
-INFO     root:checkout_page.py:13 CheckoutPage: Filling checkout form: Evan, Cook, 71682
+INFO     root:checkout_page.py:13 CheckoutPage: Filling checkout form: Christopher, Green, 16775
 INFO     root:base_page.py:63 Waiting for element visible: ('xpath', "//*[@placeholder='First Name']")
-INFO     root:base_page.py:33 Entering text into ('xpath', "//*[@placeholder='First Name']"): Evan
-INFO     root:base_page.py:33 Entering text into ('xpath', "//*[@placeholder='Last Name']"): Cook
-INFO     root:base_page.py:33 Entering text into ('xpath', "//*[@placeholder='Zip/Postal Code']"): 71682
+INFO     root:base_page.py:33 Entering text into ('xpath', "//*[@placeholder='First Name']"): Christopher
+INFO     root:base_page.py:33 Entering text into ('xpath', "//*[@placeholder='Last Name']"): Green
+INFO     root:base_page.py:33 Entering text into ('xpath', "//*[@placeholder='Zip/Postal Code']"): 16775
 INFO     root:checkout_page.py:21 CheckoutPage: Clicking continue button
 INFO     root:base_page.py:59 Waiting for element clickable: ('id', 'continue')
 INFO     root:base_page.py:28 Clicking element: ('id', 'continue')

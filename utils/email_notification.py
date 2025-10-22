@@ -35,7 +35,10 @@ def get_jenkins_link():
     """Lấy Jenkins link"""
     try:
         build_number = os.getenv('BUILD_NUMBER', 'lastSuccessfulBuild')
-        return f"http://localhost:8080/job/Saudemo/allure/"
+        if build_number == 'lastSuccessfulBuild':
+            return f"{JENKINS_URL}"
+        else:
+            return f"{JENKINS_URL}"
     except:
         return None
 
