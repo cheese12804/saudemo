@@ -32,13 +32,15 @@ def create_zip(source_dir, zip_path):
 
 
 def get_jenkins_link():
-    """Lấy Jenkins link"""
+    """Lấy Jenkins link với số build thực tế"""
     try:
         build_number = os.getenv('BUILD_NUMBER', 'lastSuccessfulBuild')
-        if build_number == 'lastSuccessfulBuild':
-            return f"{JENKINS_URL}"
+        if build_number and build_number != 'lastSuccessfulBuild':
+            # Sử dụng số build thực tế từ Jenkins
+            return f"http://localhost:8080/job/Saudemo/{build_number}/allure/"
         else:
-            return f"{JENKINS_URL}"
+            # Fallback nếu không có BUILD_NUMBER
+            return f"http://localhost:8080/job/Saudemo/allure/"
     except:
         return None
 
@@ -69,12 +71,16 @@ def send_allure_report_email(allure_results_dir, test_summary=None):
             for key, value in test_summary.items():
                 test_info += f"{key}: {value}\n"
         
+        # Thêm thông tin build number
+        build_number = os.getenv('BUILD_NUMBER', 'Unknown')
+        build_info = f"Build Number: {build_number}\n"
+        
         body = f"""Test execution completed.
 
 Execution Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
 Results Directory: {allure_results_dir}
 
-Test Summary:
+{build_info}Test Summary:
 {test_info}
 
 Report Link: {jenkins_url if jenkins_url else 'Not available'}
@@ -125,12 +131,16 @@ def send_simple_notification(allure_results_dir):
         msg['To'] = RECEIVER_EMAIL
         msg['Subject'] = f"Test Completed - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
         
+        # Thêm thông tin build number
+        build_number = os.getenv('BUILD_NUMBER', 'Unknown')
+        build_info = f"Build Number: {build_number}\n"
+        
         body = f"""Test execution completed.
 
 Execution Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
 Results Directory: {allure_results_dir}
 
-Report Link: {jenkins_url if jenkins_url else 'Not available'}"""
+{build_info}Report Link: {jenkins_url if jenkins_url else 'Not available'}"""
         
         msg.attach(MIMEText(body, 'plain'))
         
