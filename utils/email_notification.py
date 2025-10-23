@@ -25,13 +25,10 @@ def create_zip(source_dir, zip_path):
 
 
 def send_test_results_email(allure_results_dir=None):
-
-        # Lấy thông tin cần thiết
     execution_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     build_number = os.getenv('BUILD_NUMBER', 'Unknown')
     job_link = f"http://localhost:8080/job/Saudemo/{build_number}/allure/" if build_number != 'Unknown' else "http://localhost:8080/job/Saudemo/"
     
-    # Tự động đếm test results từ allure-results
     passed = 0
     failed = 0
     
@@ -57,7 +54,6 @@ def send_test_results_email(allure_results_dir=None):
     msg['To'] = RECEIVER_EMAIL
     msg['Subject'] = f"Test Results - {execution_time}"
     
-    # Body chỉ với 6 thông tin yêu cầu
     body = f"""1. Execution time: {execution_time}
 2. Build number: {build_number}
 3. Passed: {passed}

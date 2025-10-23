@@ -68,15 +68,16 @@ def setup_teardown2():
 @pytest.hookimpl(trylast=True)
 def pytest_sessionfinish(session, exitstatus):
     try:
-        logger.info("=== BẮT ĐẦU GỬI EMAIL BÁO CÁO ===")
-        
+        logger.info("=== STARTING TO SEND TEST REPORT EMAIL ===")
+
         project_root = os.path.dirname(os.path.abspath(__file__))
         allure_results_dir = os.path.join(project_root, "allure-results")
-        logger.info("Gửi email báo cáo test...")
+        logger.info("Sending test report email...")
         send_test_results_email(allure_results_dir)
-            
-        logger.info("=== EMAIL ĐÃ ĐƯỢC GỬI THÀNH CÔNG ===")
-        
+
+        logger.info("=== TEST REPORT EMAIL SENT SUCCESSFULLY ===")
+
     except Exception as e:
-        logger.error(f"Lỗi khi gửi email: {str(e)}")
+        logger.error(f"Error while sending email: {str(e)}")
+
 
