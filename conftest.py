@@ -67,14 +67,11 @@ def setup_teardown2():
 # Hook để tự động gửi email sau khi test hoàn thành
 @pytest.hookimpl(trylast=True)
 def pytest_sessionfinish(session, exitstatus):
-    """Tự động gửi email sau khi tất cả test hoàn thành"""
     try:
         logger.info("=== BẮT ĐẦU GỬI EMAIL BÁO CÁO ===")
         
         project_root = os.path.dirname(os.path.abspath(__file__))
         allure_results_dir = os.path.join(project_root, "allure-results")
-            
-        # Gửi email với 6 thông tin cần thiết (tự động tính passed/failed)
         logger.info("Gửi email báo cáo test...")
         send_test_results_email(allure_results_dir)
             
@@ -82,8 +79,4 @@ def pytest_sessionfinish(session, exitstatus):
         
     except Exception as e:
         logger.error(f"Lỗi khi gửi email: {str(e)}")
-        # Vẫn cố gắng gửi email đơn giản nếu có lỗi
-        try:
-            send_test_results_email()
-        except:
-            logger.error("Không thể gửi email báo cáo")
+
