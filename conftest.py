@@ -1,14 +1,10 @@
+import os
 import platform
 import pytest
-import allure
-import os
-import sys
-from webdriver_manage.driver_manage import DriverManager
-from configs.logging_config import logger
-from utils.screenshot_util import ScreenshotUtil
 from base_page import BasePage
-from configs.config import Config
+from configs.logging_config import logger
 from utils.email_notification import send_test_results_email
+from webdriver_manage.driver_manage import DriverManager
 
 
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
@@ -23,7 +19,6 @@ def pytest_runtest_makereport(item, call):
                 logger.error(f"Screenshot captured for failed test: {item.name}")
         except Exception as e:
             logger.error(f"Failed to capture screenshot on test failure: {str(e)}")
-
 
 
 @pytest.fixture(scope="class", autouse=True)
@@ -64,7 +59,6 @@ def setup_teardown2():
     DriverManager.open_base_url()
 
 
-# Hook để tự động gửi email sau khi test hoàn thành
 @pytest.hookimpl(trylast=True)
 def pytest_sessionfinish(session, exitstatus):
     try:
@@ -79,5 +73,3 @@ def pytest_sessionfinish(session, exitstatus):
 
     except Exception as e:
         logger.error(f"Error while sending email: {str(e)}")
-
-

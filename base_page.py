@@ -88,7 +88,6 @@ class BasePage:
             if window == window_id:
                 DriverManager.driver.switch_to.window(window)
                 break
-
     @staticmethod
     def switch_to_window_by_title(title):
         all_windows = BasePage.get_all_windows()
