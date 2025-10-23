@@ -43,7 +43,7 @@ def send_test_results_email(allure_results_dir=None):
         # Lấy thông tin cần thiết
         execution_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         build_number = os.getenv('BUILD_NUMBER', 'Unknown')
-        job_link = f"http://localhost:8080/job/Saudemo/{build_number}/" if build_number != 'Unknown' else "http://localhost:8080/job/Saudemo/"
+        job_link = f"http://localhost:8080/job/Saudemo/{build_number}/allure/" if build_number != 'Unknown' else "http://localhost:8080/job/Saudemo/"
         
         # Tự động đếm test results từ allure-results
         passed = 0
@@ -73,12 +73,12 @@ def send_test_results_email(allure_results_dir=None):
         
         # Body chỉ với 6 thông tin yêu cầu
         body = f"""1. Execution time: {execution_time}
-            2. Build number: {build_number}
-            3. Passed: {passed}
-            4. Failed: {failed}
-            5. Link tới job: {job_link}
-            6. Allure file: {'Attached' if allure_results_dir else 'Not available'}"""
-        
+2. Build number: {build_number}
+3. Passed: {passed}
+4. Failed: {failed}
+5. Link tới job: {job_link}
+6. Allure file: {'Attached' if allure_results_dir else 'Not available'}"""
+
         msg.attach(MIMEText(body, 'plain'))
         
         # Đính kèm Allure file nếu có
