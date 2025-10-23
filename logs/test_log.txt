@@ -1,0 +1,48 @@
+INFO     root:conftest.py:31 === BẮT ĐẦU TEST SESSION ===
+INFO     root:conftest.py:38 Setting up test - Initializing driver
+INFO     root:driver_manage.py:16 Initializing chrome driver
+INFO     root:driver_manage.py:30 Maximizing browser window and setting implicit wait
+INFO     root:driver_manage.py:33 Driver initialized successfully: chrome
+INFO     root:conftest.py:40 Test setup completed
+INFO     root:driver_manage.py:42 Opening URL: https://www.saucedemo.com/
+INFO     root:driver_manage.py:45 URL opened successfully
+INFO     root:login_page.py:13 LoginPage: Entering username: standard_user
+INFO     root:base_page.py:63 Waiting for element visible: ('xpath', "//input[@placeholder='Username']")
+INFO     root:base_page.py:33 Entering text into ('xpath', "//input[@placeholder='Username']"): standard_user
+INFO     root:login_page.py:20 LoginPage: Entering password: secret_sauce
+INFO     root:base_page.py:63 Waiting for element visible: ('xpath', "//input[@placeholder='Password']")
+INFO     root:base_page.py:33 Entering text into ('xpath', "//input[@placeholder='Password']"): secret_sauce
+INFO     root:login_page.py:27 LoginPage: Clicking login button
+INFO     root:base_page.py:59 Waiting for element clickable: ('xpath', "//input[@type='submit']")
+INFO     root:base_page.py:28 Clicking element: ('xpath', "//input[@type='submit']")
+INFO     root:conftest.py:42 Tearing down test - Closing driver
+INFO     root:driver_manage.py:51 Quitting driver
+INFO     root:driver_manage.py:54 Driver quit successfully
+INFO     root:conftest.py:44 Test teardown completed
+INFO     root:conftest.py:33 === KẾT THÚC TEST SESSION ===
+INFO     root:conftest.py:31 === BẮT ĐẦU TEST SESSION ===
+INFO     root:conftest.py:38 Setting up test - Initializing driver
+INFO     root:driver_manage.py:16 Initializing chrome driver
+INFO     root:driver_manage.py:30 Maximizing browser window and setting implicit wait
+INFO     root:driver_manage.py:33 Driver initialized successfully: chrome
+INFO     root:conftest.py:40 Test setup completed
+INFO     root:driver_manage.py:42 Opening URL: https://www.saucedemo.com/
+INFO     root:driver_manage.py:45 URL opened successfully
+INFO     root:login_page.py:13 LoginPage: Entering username: standard_user
+INFO     root:base_page.py:63 Waiting for element visible: ('xpath', "//input[@placeholder='Username']")
+INFO     root:base_page.py:33 Entering text into ('xpath', "//input[@placeholder='Username']"): standard_user
+INFO     root:login_page.py:20 LoginPage: Entering password: wrong_password
+INFO     root:base_page.py:63 Waiting for element visible: ('xpath', "//input[@placeholder='Password']")
+INFO     root:base_page.py:33 Entering text into ('xpath', "//input[@placeholder='Password']"): wrong_password
+INFO     root:login_page.py:27 LoginPage: Clicking login button
+INFO     root:base_page.py:59 Waiting for element clickable: ('xpath', "//input[@type='submit']")
+INFO     root:base_page.py:28 Clicking element: ('xpath', "//input[@type='submit']")
+INFO     root:base_page.py:63 Waiting for element visible: ('xpath', "//h3[@data-test='error']")
+INFO     root:conftest.py:42 Tearing down test - Closing driver
+INFO     root:driver_manage.py:51 Quitting driver
+INFO     root:driver_manage.py:54 Driver quit successfully
+INFO     root:conftest.py:44 Test teardown completed
+INFO     root:conftest.py:33 === KẾT THÚC TEST SESSION ===
+INFO     root:conftest.py:72 === BẮT ĐẦU GỬI EMAIL BÁO CÁO ===
+INFO     root:conftest.py:78 Gửi email báo cáo test...
+INFO     root:conftest.py:81 === EMAIL ĐÃ ĐƯỢC GỬI THÀNH CÔNG ===

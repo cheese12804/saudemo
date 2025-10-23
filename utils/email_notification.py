@@ -7,18 +7,15 @@ import os
 import zipfile
 from datetime import datetime
 
-# Cấu hình
 SMTP_SERVER = 'smtp.gmail.com'
 SMTP_PORT = 587
 SENDER_EMAIL = 'cuasophongem69@gmail.com'
 RECEIVER_EMAIL = 'cheese12804@gmail.com'
 APP_PASSWORD = 'bhnt tyyz fgvs xjqc'
-JENKINS_URL = 'http://localhost:8080/job/Saudemo/allure/'
-JENKINS_JOB_NAME = 'test-automation'
 
 
 def create_zip(source_dir, zip_path):
-    """Tạo zip file"""
+    """Tạo zip file từ thư mục"""
     try:
         with zipfile.ZipFile(zip_path, 'w') as zipf:
             for root, dirs, files in os.walk(source_dir):
@@ -27,77 +24,79 @@ def create_zip(source_dir, zip_path):
                     arcname = os.path.relpath(file_path, source_dir)
                     zipf.write(file_path, arcname)
         return True
-    except:
+    except Exception as e:
+        print(f"Error creating zip: {e}")
         return False
 
 
-def get_jenkins_link():
-    """Lấy Jenkins link với số build thực tế"""
+def send_test_results_email(allure_results_dir=None):
+    """
+    Gửi email với 6 thông tin cần thiết:
+    1. Execution time
+    2. Build number  
+    3. Passed
+    4. Failed
+    5. Link tới job
+    6. Allure file
+    """
     try:
-        build_number = os.getenv('BUILD_NUMBER', 'lastSuccessfulBuild')
-        if build_number and build_number != 'lastSuccessfulBuild':
-            # Sử dụng số build thực tế từ Jenkins
-            return f"http://localhost:8080/job/Saudemo/{build_number}/allure/"
-        else:
-            # Fallback nếu không có BUILD_NUMBER
-            return f"http://localhost:8080/job/Saudemo/allure/"
-    except:
-        return None
-
-
-def send_allure_report_email(allure_results_dir, test_summary=None):
-    """Gửi email với Jenkins link"""
-    try:
-        # Lấy Jenkins link
-        jenkins_url = get_jenkins_link()
+        # Lấy thông tin cần thiết
+        execution_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        build_number = os.getenv('BUILD_NUMBER', 'Unknown')
+        job_link = f"http://localhost:8080/job/Saudemo/{build_number}/" if build_number != 'Unknown' else "http://localhost:8080/job/Saudemo/"
         
-        # Tạo zip
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        zip_filename = f"allure_report_{timestamp}.zip"
-        zip_path = os.path.join(os.path.dirname(allure_results_dir), zip_filename)
+        # Tự động đếm test results từ allure-results
+        passed = 0
+        failed = 0
         
-        if not create_zip(allure_results_dir, zip_path):
-            return False
+        if allure_results_dir and os.path.exists(allure_results_dir):
+            # Đếm từ allure results files
+            for file in os.listdir(allure_results_dir):
+                if file.endswith('.json'):
+                    file_path = os.path.join(allure_results_dir, file)
+                    try:
+                        import json
+                        with open(file_path, 'r', encoding='utf-8') as f:
+                            data = json.load(f)
+                            if data.get('status') == 'passed':
+                                passed += 1
+                            elif data.get('status') == 'failed':
+                                failed += 1
+                    except:
+                        continue
         
         # Tạo email
         msg = MIMEMultipart()
         msg['From'] = SENDER_EMAIL
         msg['To'] = RECEIVER_EMAIL
-        msg['Subject'] = f"Test Results - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+        msg['Subject'] = f"Test Results - {execution_time}"
         
-        # Nội dung email
-        test_info = ""
-        if test_summary:
-            for key, value in test_summary.items():
-                test_info += f"{key}: {value}\n"
-        
-        # Thêm thông tin build number
-        build_number = os.getenv('BUILD_NUMBER', 'Unknown')
-        build_info = f"Build Number: {build_number}\n"
-        
-        body = f"""Test execution completed.
-
-Execution Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
-Results Directory: {allure_results_dir}
-
-{build_info}Test Summary:
-{test_info}
-
-Report Link: {jenkins_url if jenkins_url else 'Not available'}
-
-Attachment: {zip_filename}
-To view: Extract zip file and open index.html in browser"""
+        # Body chỉ với 6 thông tin yêu cầu
+        body = f"""1. Execution time: {execution_time}
+            2. Build number: {build_number}
+            3. Passed: {passed}
+            4. Failed: {failed}
+            5. Link tới job: {job_link}
+            6. Allure file: {'Attached' if allure_results_dir else 'Not available'}"""
         
         msg.attach(MIMEText(body, 'plain'))
         
-        # Đính kèm zip
-        if os.path.exists(zip_path):
-            with open(zip_path, "rb") as attachment:
-                part = MIMEBase('application', 'octet-stream')
-                part.set_payload(attachment.read())
-                encoders.encode_base64(part)
-                part.add_header('Content-Disposition', f'attachment; filename= {zip_filename}')
-                msg.attach(part)
+        # Đính kèm Allure file nếu có
+        if allure_results_dir and os.path.exists(allure_results_dir):
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            zip_filename = f"allure_report_{timestamp}.zip"
+            zip_path = os.path.join(os.path.dirname(allure_results_dir), zip_filename)
+            
+            if create_zip(allure_results_dir, zip_path) and os.path.exists(zip_path):
+                with open(zip_path, "rb") as attachment:
+                    part = MIMEBase('application', 'octet-stream')
+                    part.set_payload(attachment.read())
+                    encoders.encode_base64(part)
+                    part.add_header('Content-Disposition', f'attachment; filename= {zip_filename}')
+                    msg.attach(part)
+                
+                # Xóa zip sau khi đính kèm
+                os.remove(zip_path)
         
         # Gửi email
         server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
@@ -107,54 +106,10 @@ To view: Extract zip file and open index.html in browser"""
         server.quit()
         
         print(f"Email sent to {RECEIVER_EMAIL}")
-        if jenkins_url:
-            print(f"Report link: {jenkins_url}")
-        
-        # Xóa zip
-        if os.path.exists(zip_path):
-            os.remove(zip_path)
-        
+        print(f"Job link: {job_link}")
         return True
         
     except Exception as e:
         print(f"Error sending email: {e}")
         return False
 
-
-def send_simple_notification(allure_results_dir):
-    """Gửi thông báo đơn giản"""
-    try:
-        jenkins_url = get_jenkins_link()
-        
-        msg = MIMEMultipart()
-        msg['From'] = SENDER_EMAIL
-        msg['To'] = RECEIVER_EMAIL
-        msg['Subject'] = f"Test Completed - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
-        
-        # Thêm thông tin build number
-        build_number = os.getenv('BUILD_NUMBER', 'Unknown')
-        build_info = f"Build Number: {build_number}\n"
-        
-        body = f"""Test execution completed.
-
-Execution Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
-Results Directory: {allure_results_dir}
-
-{build_info}Report Link: {jenkins_url if jenkins_url else 'Not available'}"""
-        
-        msg.attach(MIMEText(body, 'plain'))
-        
-        server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
-        server.starttls()
-        server.login(SENDER_EMAIL, APP_PASSWORD)
-        server.sendmail(SENDER_EMAIL, RECEIVER_EMAIL, msg.as_string())
-        server.quit()
-        
-        print(f"Simple notification sent to {RECEIVER_EMAIL}")
-        if jenkins_url:
-            print(f"Report link: {jenkins_url}")
-        return True
-        
-    except Exception as e:
-        print(f"Error sending notification: {e}")
-        return False
