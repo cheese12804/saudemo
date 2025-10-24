@@ -1,7 +1,5 @@
 import logging
 import os
-
-
 def setup_logger():
     # Tạo logger
     logger = logging.getLogger()
@@ -30,6 +28,4 @@ def setup_logger():
 
     return logger
 
-
-# Khởi tạo logger
 logger = setup_logger()

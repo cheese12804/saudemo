@@ -61,15 +61,20 @@ def setup_teardown2():
 
 @pytest.hookimpl(trylast=True)
 def pytest_sessionfinish(session, exitstatus):
+    # Nếu đang chạy trong worker của xdist thì thoát, không gửi mail
+    is_worker = hasattr(session.config, "workerinput") or os.environ.get("PYTEST_XDIST_WORKER")
+    if is_worker:
+        return
+
     try:
         logger.info("=== STARTING TO SEND TEST REPORT EMAIL ===")
 
         project_root = os.path.dirname(os.path.abspath(__file__))
         allure_results_dir = os.path.join(project_root, "allure-results")
         logger.info("Sending test report email...")
+
         send_test_results_email(allure_results_dir)
 
         logger.info("=== TEST REPORT EMAIL SENT SUCCESSFULLY ===")
-
     except Exception as e:
         logger.error(f"Error while sending email: {str(e)}")

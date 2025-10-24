@@ -13,10 +13,8 @@ def open_json(file_path: str):
     full_path = os.path.join(project_root, file_path)
     with open(full_path, encoding="utf-8") as f:
         return json.load(f)
-
 def get_project_root():
     return os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 def get_absolute_path(relative_path: str):
     return os.path.join(get_project_root(), relative_path)
 class Config:

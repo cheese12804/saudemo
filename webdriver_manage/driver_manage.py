@@ -21,7 +21,7 @@ class DriverManager:
             elif browser == 'edge':
                 DriverManager.driver = webdriver.Edge()
             else:
-                logger.warning(f"Browser '{browser}' không được hỗ trợ. Sử dụng Chrome mặc định.")
+                logger.warning(f"Browser '{browser}' cant be recognized, defaulting to Chrome")
                 DriverManager.driver = webdriver.Chrome()
 
             logger.info("Maximizing browser window and setting implicit wait")
